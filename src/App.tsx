@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   BookOpen, ArrowRight, Github, 
@@ -15,7 +15,35 @@ import EnsayoConclusiones from './components/EnsayoConclusiones';
 import AuthorProfile from './components/AuthorProfile';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('portada');
+  // Helper to parse current hash and default to 'portada'
+  const getTabFromHash = (): string => {
+    const hash = window.location.hash.replace('#', '');
+    const validTabs = ['portada', 'autor', 'infografia', 'mapa_mixto', 'investigacion', 'ensayo'];
+    return validTabs.includes(hash) ? hash : 'portada';
+  };
+
+  const [activeTab, setActiveTabState] = useState<string>(getTabFromHash);
+
+  // Wrapper function to change URL hash, which triggers state change via listener
+  const setActiveTab = (tab: string) => {
+    window.location.hash = tab;
+  };
+
+  useEffect(() => {
+    // Set default hash on mount if none is specified
+    if (!window.location.hash) {
+      window.location.hash = 'portada';
+    }
+
+    const handleHashChange = () => {
+      setActiveTabState(getTabFromHash());
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
 
   // Renders the specific active tab component
   const renderTabContent = () => {
