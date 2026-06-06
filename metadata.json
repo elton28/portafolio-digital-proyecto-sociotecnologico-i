@@ -1,0 +1,6 @@
+{
+  "name": "Portafolio Digital - Proyecto Sociotecnológico I",
+  "description": "Portafolio digital de Proyecto Sociotecnológico I para Ingeniería en Informática de la UNETI, presentado por Elton Isaac Terán Palencia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
